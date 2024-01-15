@@ -1,0 +1,28 @@
+version: '2.2'    #Revisar que version de docker compose se tiene instalada se necesita 2.2 o superior
+services:
+  web:
+    image: php:8.2-apache    #Se usa la version php 8.2
+    ports:
+      - "8001:80"    #Mapea el puerto 8001 con el 80 del contenedor, cuando el contenedor este corriendo se puede acceder mediante http://localhost:8001
+#    depends_on:
+#      - db    #Esta linea es cuando se ocupe mysql y el servicio no arranque si no exista una base de datos . En este caso no usaremos base de datos por eso lo comentamos
+    volumes:
+      - ./html:/var/www/html    #el contenido de la pagina web se encuentra en ./html en la computadora local y se mapea a la carpeta /var/www/html del contenedor apache
+#De esta linea para abajo son contenedores del mysql y phpmyadmin, estan comentado porque no usaremos base de datos en este ejercicio
+# Pero puede integrarse rapidamente en un futuro
+#  db:
+#    image: mysql:8.1.0    #version de mysql que se vaya a usar
+#    environment:
+#      MYSQL_ROOT_PASSWORD: contrasena    #mysql contraseña root password
+#      MYSQL_DATABASE: database_name    #nombre de la base de datos donde se persistira informacion
+#    volumes:
+#      - ./mysql_data:/var/lib/mysql    #La persistencia de datos e encontrara en ./mysql_data  en la computadora local y se mapea al /var/lib/mysql del contenedor
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin # Contenedor phpAdmin para conectarse y editar la base de datos facilmente
+#    ports:
+#      - "8002:80"    #Se mapea el puerto de la computadora 8002 al 80 del contenedor phpMyAdmin
+# Para acceder a php my Dmin http://localhost:8002	
+#    depends_on:   
+#      - db    #El contenedor no arrancara si la base de datos no esta lista
+#    environment:
+#      PMA_HOST: db #Nombre donde se linkea el conteneror mysql para que este disponible para los demas contenedores
